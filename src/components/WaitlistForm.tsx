@@ -134,7 +134,7 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
             </Label>
           </div>
           <RadioGroup
-            value={selectedProfil}
+            value={selectedProfil ?? ""}
             onValueChange={(value) => setValue('profil', value as WaitlistFormData['profil'], { shouldValidate: true })}
             className="space-y-3"
           >
@@ -212,7 +212,7 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
             </Label>
           </div>
           <RadioGroup
-            value={selectedBudget}
+            value={selectedBudget ?? ""}
             onValueChange={(value) => setValue('budget', value as WaitlistFormData['budget'], { shouldValidate: true })}
             className="grid gap-3 sm:grid-cols-2"
           >
@@ -254,7 +254,7 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
             Un outil qui gère vos calculs fiscaux et votre conformité
           </p>
           <RadioGroup
-            value={selectedInvestissement}
+            value={selectedInvestissement ?? ""}
             onValueChange={(value) => setValue('investissement', value as WaitlistFormData['investissement'], { shouldValidate: true })}
             className="grid gap-3 sm:grid-cols-2"
           >
