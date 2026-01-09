@@ -181,21 +181,22 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
           </p>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {marchesOptions.map((option) => (
-              <div
+              <Label
                 key={option.value}
+                htmlFor={`marche-${option.value}`}
                 className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-all cursor-pointer ${
                   selectedMarches.includes(option.value)
                     ? 'border-primary-500 bg-primary-50'
                     : 'border-secondary-200 hover:border-primary-300'
                 }`}
-                onClick={() => toggleMarche(option.value)}
               >
                 <Checkbox
+                  id={`marche-${option.value}`}
                   checked={selectedMarches.includes(option.value)}
                   onCheckedChange={() => toggleMarche(option.value)}
                 />
-                <Label className="cursor-pointer">{option.label}</Label>
-              </div>
+                <span>{option.label}</span>
+              </Label>
             ))}
           </div>
           {errors.marches && (
