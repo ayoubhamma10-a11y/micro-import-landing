@@ -1,17 +1,21 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 // Ces valeurs seront remplacées par tes vraies clés dans le .env
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 
-// Warn in development if Supabase is not configured
-if (import.meta.env.DEV && (!supabaseUrl || !supabaseAnonKey)) {
+// Only create client if environment variables are configured
+export const supabase: SupabaseClient | null =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null
+
+// Log warning if Supabase is not configured
+if (!supabase) {
   console.warn(
     '[Supabase] Missing environment variables. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file.'
   )
 }
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 // Types pour la table waitlist
 export interface WaitlistEntry {

@@ -58,6 +58,12 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
     setIsSubmitting(true)
     setError(null)
 
+    if (!supabase) {
+      setError('Le service est temporairement indisponible. Veuillez réessayer plus tard.')
+      setIsSubmitting(false)
+      return
+    }
+
     try {
       // Insertion dans Supabase
       const { error: insertError } = await supabase
