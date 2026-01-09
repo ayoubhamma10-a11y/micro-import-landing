@@ -16,6 +16,8 @@ import {
   Sparkles,
   Crown,
   Zap,
+  Menu,
+  X,
 } from 'lucide-react'
 
 import { WaitlistForm } from '@/components/WaitlistForm'
@@ -50,6 +52,7 @@ function useScrollAnimation() {
 function App() {
   const [isSuccess, setIsSuccess] = useState(false)
   const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const visibleElements = useScrollAnimation()
 
   if (isSuccess) {
@@ -170,25 +173,27 @@ function App() {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen overflow-x-hidden">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-lg border-b border-primary-100 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 icon-gradient rounded-xl flex items-center justify-center shadow-lg animate-pulse-glow">
-              <Crown className="w-6 h-6 text-white" />
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 icon-gradient rounded-xl flex items-center justify-center shadow-lg animate-pulse-glow">
+              <Crown className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-secondary-900 text-lg leading-tight">
+              <span className="font-bold text-secondary-900 text-base sm:text-lg leading-tight">
                 Micro-Import
               </span>
-              <span className="text-xs font-semibold text-gradient uppercase tracking-wider">
+              <span className="text-[10px] sm:text-xs font-semibold text-gradient uppercase tracking-wider">
                 Elite
               </span>
             </div>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="hidden sm:flex items-center gap-2 text-sm text-primary-700 bg-primary-50 px-3 py-1.5 rounded-full border border-primary-200">
+
+          {/* Desktop menu */}
+          <div className="hidden md:flex items-center gap-4">
+            <span className="flex items-center gap-2 text-sm text-primary-700 bg-primary-50 px-3 py-1.5 rounded-full border border-primary-200">
               <Sparkles className="w-4 h-4" />
               Regime 080101
             </span>
@@ -196,33 +201,65 @@ function App() {
               S'inscrire
             </a>
           </div>
+
+          {/* Mobile menu button */}
+          <button
+            className="md:hidden p-2 rounded-lg hover:bg-primary-50 transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Menu"
+          >
+            {mobileMenuOpen ? (
+              <X className="w-6 h-6 text-secondary-700" />
+            ) : (
+              <Menu className="w-6 h-6 text-secondary-700" />
+            )}
+          </button>
         </div>
+
+        {/* Mobile menu dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-primary-100 px-4 py-4 space-y-4 animate-fade-in">
+            <div className="flex items-center gap-2 text-sm text-primary-700 bg-primary-50 px-3 py-2 rounded-full border border-primary-200 w-fit">
+              <Sparkles className="w-4 h-4" />
+              Regime 080101
+            </div>
+            <a
+              href="#waitlist"
+              className="btn-elite text-white px-5 py-3 rounded-xl text-sm font-semibold block text-center"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              S'inscrire maintenant
+            </a>
+          </div>
+        )}
       </header>
 
       {/* Hero Section */}
-      <section className="hero-gradient py-16 sm:py-24 overflow-hidden relative">
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-400/10 rounded-full blur-3xl floating" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-400/10 rounded-full blur-3xl floating-delayed" />
+      <section className="hero-gradient py-10 sm:py-16 lg:py-24 overflow-hidden relative">
+        {/* Decorative elements - hidden on small mobile */}
+        <div className="hidden sm:block absolute top-20 left-10 w-48 sm:w-72 h-48 sm:h-72 bg-primary-400/10 rounded-full blur-3xl floating" />
+        <div className="hidden sm:block absolute bottom-20 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-accent-400/10 rounded-full blur-3xl floating-delayed" />
 
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-center lg:text-left animate-fade-in-up">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 relative z-10">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div className="text-center lg:text-left animate-fade-in-up order-1">
               {/* Badge urgence dynamique */}
-              <SpotsCounter className="mb-6" />
+              <div className="flex justify-center lg:justify-start">
+                <SpotsCounter className="mb-4 sm:mb-6" />
+              </div>
 
               {/* Elite Badge */}
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-600 to-elite-600 text-white rounded-full text-sm font-medium mb-6 shadow-lg badge-shine">
-                <Crown className="w-4 h-4" />
+              <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary-600 to-elite-600 text-white rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6 shadow-lg badge-shine">
+                <Crown className="w-3 h-3 sm:w-4 sm:h-4" />
                 <span>Experience Premium</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-secondary-900 mb-6 leading-tight">
+              <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-900 mb-4 sm:mb-6 leading-tight">
                 Fini les calculs sur papier.{' '}
                 <span className="text-gradient relative inline-block">
                   Importez sereinement.
-                  <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 200 8" fill="none">
-                    <path d="M1 5.5C47.6667 2.16667 141.4 -2.4 199 5.5" stroke="url(#gradient)" strokeWidth="3" strokeLinecap="round"/>
+                  <svg className="absolute -bottom-1 sm:-bottom-2 left-0 w-full" height="6" viewBox="0 0 200 8" fill="none">
+                    <path d="M1 5.5C47.6667 2.16667 141.4 -2.4 199 5.5" stroke="url(#gradient)" strokeWidth="2" strokeLinecap="round"/>
                     <defs>
                       <linearGradient id="gradient" x1="0" y1="0" x2="200" y2="0">
                         <stop offset="0%" stopColor="#6366f1"/>
@@ -234,65 +271,65 @@ function App() {
                 </span>
               </h1>
 
-              <p className="text-xl text-secondary-600 mb-8 leading-relaxed">
+              <p className="text-base sm:text-lg lg:text-xl text-secondary-600 mb-6 sm:mb-8 leading-relaxed px-2 sm:px-0">
                 L'outil tout-en-un pour les <strong className="text-primary-700">micro-importateurs algeriens</strong> :
                 calculs fiscaux automatiques, suivi des plafonds et conformite au decret 25-170.
                 <span className="text-gradient font-semibold"> Meme sans internet.</span>
               </p>
 
               {/* Trust badges */}
-              <div className="flex flex-wrap gap-6 justify-center lg:justify-start mb-8">
-                <div className="flex items-center gap-2 text-secondary-600 group">
-                  <div className="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <CheckCircle2 className="w-4 h-4 text-primary-600" />
+              <div className="flex flex-wrap gap-3 sm:gap-6 justify-center lg:justify-start mb-6 sm:mb-8">
+                <div className="flex items-center gap-1.5 sm:gap-2 text-secondary-600 group">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary-100 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-primary-600" />
                   </div>
-                  <span className="text-sm font-medium">100% conforme</span>
+                  <span className="text-xs sm:text-sm font-medium">100% conforme</span>
                 </div>
-                <div className="flex items-center gap-2 text-secondary-600 group">
-                  <div className="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <CheckCircle2 className="w-4 h-4 text-primary-600" />
+                <div className="flex items-center gap-1.5 sm:gap-2 text-secondary-600 group">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary-100 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-primary-600" />
                   </div>
-                  <span className="text-sm font-medium">Donnees securisees</span>
+                  <span className="text-xs sm:text-sm font-medium">Donnees securisees</span>
                 </div>
-                <div className="flex items-center gap-2 text-secondary-600 group">
-                  <div className="w-6 h-6 rounded-full bg-primary-100 flex items-center justify-center group-hover:scale-110 transition-transform">
-                    <CheckCircle2 className="w-4 h-4 text-primary-600" />
+                <div className="flex items-center gap-1.5 sm:gap-2 text-secondary-600 group">
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-primary-100 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-primary-600" />
                   </div>
-                  <span className="text-sm font-medium">Support en arabe</span>
+                  <span className="text-xs sm:text-sm font-medium">Support en arabe</span>
                 </div>
               </div>
 
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-4 p-5 glass-card rounded-2xl border border-primary-100">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 p-3 sm:p-5 glass-card rounded-xl sm:rounded-2xl border border-primary-100">
                 <div className="text-center">
-                  <p className="text-2xl sm:text-3xl font-bold text-gradient">1.8M</p>
-                  <p className="text-xs sm:text-sm text-secondary-500">DA max/voyage</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient">1.8M</p>
+                  <p className="text-[10px] sm:text-xs md:text-sm text-secondary-500">DA max/voyage</p>
                 </div>
                 <div className="text-center border-x border-primary-100">
-                  <p className="text-2xl sm:text-3xl font-bold text-gradient">5%</p>
-                  <p className="text-xs sm:text-sm text-secondary-500">Droits douane</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient">5%</p>
+                  <p className="text-[10px] sm:text-xs md:text-sm text-secondary-500">Droits douane</p>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl sm:text-3xl font-bold text-gradient">2</p>
-                  <p className="text-xs sm:text-sm text-secondary-500">Voyages/mois</p>
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gradient">2</p>
+                  <p className="text-[10px] sm:text-xs md:text-sm text-secondary-500">Voyages/mois</p>
                 </div>
               </div>
             </div>
 
             {/* Formulaire */}
-            <div className="lg:pl-8 animate-fade-in-up" style={{ animationDelay: '0.2s' }} id="waitlist">
-              <div className="bg-white rounded-2xl shadow-elite p-6 sm:p-8 relative border border-primary-100">
+            <div className="w-full lg:pl-8 animate-fade-in-up order-2" style={{ animationDelay: '0.2s' }} id="waitlist">
+              <div className="bg-white rounded-xl sm:rounded-2xl shadow-elite p-4 sm:p-6 md:p-8 relative border border-primary-100">
                 {/* Badge promo */}
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 btn-gold text-white px-4 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap shadow-gold badge-shine">
-                  <Zap className="w-4 h-4 inline mr-1" />
-                  Acces prioritaire pour les premiers inscrits
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 btn-gold text-white px-2 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-sm font-semibold whitespace-nowrap shadow-gold badge-shine">
+                  <Zap className="w-3 h-3 sm:w-4 sm:h-4 inline mr-0.5 sm:mr-1" />
+                  <span className="hidden xs:inline">Acces prioritaire pour les </span>premiers inscrits
                 </div>
 
-                <div className="text-center mb-8 mt-4">
-                  <h2 className="text-2xl font-bold text-secondary-900 mb-2">
+                <div className="text-center mb-6 sm:mb-8 mt-3 sm:mt-4">
+                  <h2 className="text-xl sm:text-2xl font-bold text-secondary-900 mb-1 sm:mb-2">
                     Rejoignez la liste d'attente
                   </h2>
-                  <p className="text-secondary-500">
+                  <p className="text-sm sm:text-base text-secondary-500">
                     Gratuit et sans engagement
                   </p>
                 </div>
@@ -301,7 +338,7 @@ function App() {
               </div>
 
               {/* Compteur de places */}
-              <SpotsCounter variant="card" className="mt-6" />
+              <SpotsCounter variant="card" className="mt-4 sm:mt-6" />
             </div>
           </div>
         </div>
@@ -311,7 +348,7 @@ function App() {
       <section
         id="problem-section"
         data-animate
-        className={`py-16 elite-dark-gradient text-white relative overflow-hidden transition-all duration-700 ${
+        className={`py-12 sm:py-16 elite-dark-gradient text-white relative overflow-hidden transition-all duration-700 ${
           visibleElements.has('problem-section') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
@@ -321,29 +358,29 @@ function App() {
           backgroundSize: '40px 40px'
         }} />
 
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-accent-400 font-medium text-sm uppercase tracking-wider">
-              <AlertTriangle className="w-4 h-4" />
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 relative z-10">
+          <div className="text-center mb-8 sm:mb-12">
+            <span className="inline-flex items-center gap-2 text-accent-400 font-medium text-xs sm:text-sm uppercase tracking-wider">
+              <AlertTriangle className="w-3 h-3 sm:w-4 sm:h-4" />
               Le probleme
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold mt-3 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mt-2 sm:mt-3 mb-3 sm:mb-4 px-2">
               La micro-importation, c'est rentable.{' '}
               <span className="text-primary-300">Mais c'est aussi un casse-tete.</span>
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 stagger-children">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 stagger-children">
             {painPoints.map((point, index) => (
               <div
                 key={index}
-                className="glass-card-dark rounded-xl p-6 card-hover group"
+                className="glass-card-dark rounded-xl p-4 sm:p-6 card-hover group"
               >
-                <div className="w-14 h-14 bg-red-500/20 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <point.icon className="w-7 h-7 text-red-400" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-red-500/20 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform">
+                  <point.icon className="w-6 h-6 sm:w-7 sm:h-7 text-red-400" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{point.title}</h3>
-                <p className="text-primary-200/80">{point.description}</p>
+                <h3 className="text-lg sm:text-xl font-semibold mb-2">{point.title}</h3>
+                <p className="text-sm sm:text-base text-primary-200/80">{point.description}</p>
               </div>
             ))}
           </div>
@@ -354,40 +391,40 @@ function App() {
       <section
         id="solution-section"
         data-animate
-        className={`py-20 bg-white relative overflow-hidden transition-all duration-700 ${
+        className={`py-12 sm:py-16 lg:py-20 bg-white relative overflow-hidden transition-all duration-700 ${
           visibleElements.has('solution-section') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-primary-600 font-medium text-sm uppercase tracking-wider">
-              <Sparkles className="w-4 h-4" />
+        <div className="max-w-6xl mx-auto px-3 sm:px-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <span className="inline-flex items-center gap-2 text-primary-600 font-medium text-xs sm:text-sm uppercase tracking-wider">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4" />
               La solution
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-secondary-900 mt-3 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary-900 mt-2 sm:mt-3 mb-3 sm:mb-4 px-2">
               Micro-Import <span className="text-gradient">Elite</span> gere tout pour vous
             </h2>
-            <p className="text-secondary-600 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-secondary-600 max-w-2xl mx-auto px-2">
               Un assistant intelligent qui vous accompagne de la planification jusqu'au passage en douane.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 stagger-children">
             {solutions.map((solution, index) => (
               <div
                 key={index}
-                className="group bg-secondary-50 rounded-xl p-6 card-hover-glow border-2 border-transparent hover:border-primary-200 hover:bg-primary-50/50"
+                className="group bg-secondary-50 rounded-xl p-4 sm:p-6 card-hover-glow border-2 border-transparent hover:border-primary-200 hover:bg-primary-50/50"
               >
-                <div className="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary-600 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary-600/30">
-                  <solution.icon className="w-7 h-7 text-primary-600 group-hover:text-white transition-colors" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-primary-100 rounded-xl flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-primary-600 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-primary-600/30">
+                  <solution.icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary-600 group-hover:text-white transition-colors" />
                 </div>
-                <span className="inline-block text-xs font-bold text-primary-700 bg-primary-100 px-3 py-1 rounded-full mb-3 group-hover:bg-primary-600 group-hover:text-white transition-colors">
+                <span className="inline-block text-[10px] sm:text-xs font-bold text-primary-700 bg-primary-100 px-2 sm:px-3 py-1 rounded-full mb-2 sm:mb-3 group-hover:bg-primary-600 group-hover:text-white transition-colors">
                   {solution.highlight}
                 </span>
-                <h3 className="text-lg font-bold text-secondary-900 mb-2">
+                <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-1 sm:mb-2">
                   {solution.title}
                 </h3>
-                <p className="text-secondary-600 text-sm">{solution.description}</p>
+                <p className="text-secondary-600 text-xs sm:text-sm">{solution.description}</p>
               </div>
             ))}
           </div>
@@ -398,39 +435,39 @@ function App() {
       <section
         id="how-section"
         data-animate
-        className={`py-20 gradient-bg relative overflow-hidden transition-all duration-700 ${
+        className={`py-12 sm:py-16 lg:py-20 gradient-bg relative overflow-hidden transition-all duration-700 ${
           visibleElements.has('how-section') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
-        {/* Decorative circles */}
-        <div className="absolute top-10 right-10 w-40 h-40 bg-accent-400/10 rounded-full blur-2xl" />
-        <div className="absolute bottom-10 left-10 w-60 h-60 bg-primary-400/10 rounded-full blur-2xl" />
+        {/* Decorative circles - hidden on mobile */}
+        <div className="hidden sm:block absolute top-10 right-10 w-40 h-40 bg-accent-400/10 rounded-full blur-2xl" />
+        <div className="hidden sm:block absolute bottom-10 left-10 w-60 h-60 bg-primary-400/10 rounded-full blur-2xl" />
 
-        <div className="max-w-6xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-primary-600 font-medium text-sm uppercase tracking-wider">
-              <Zap className="w-4 h-4" />
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 relative z-10">
+          <div className="text-center mb-8 sm:mb-12">
+            <span className="inline-flex items-center gap-2 text-primary-600 font-medium text-xs sm:text-sm uppercase tracking-wider">
+              <Zap className="w-3 h-3 sm:w-4 sm:h-4" />
               Simple comme bonjour
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-secondary-900 mt-3 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary-900 mt-2 sm:mt-3 mb-3 sm:mb-4">
               Comment ca marche ?
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
             {howItWorks.map((item, index) => (
               <div key={index} className="relative group">
-                <div className="bg-white rounded-2xl p-6 shadow-elite relative z-10 card-hover border border-primary-100">
-                  <span className="text-7xl font-black text-primary-100/50 absolute top-2 right-4 group-hover:text-primary-200/50 transition-colors">
+                <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-elite relative z-10 card-hover border border-primary-100">
+                  <span className="text-5xl sm:text-7xl font-black text-primary-100/50 absolute top-2 right-3 sm:right-4 group-hover:text-primary-200/50 transition-colors">
                     {item.step}
                   </span>
-                  <div className="w-16 h-16 icon-gradient rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform">
-                    <item.icon className="w-8 h-8 text-white" />
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 icon-gradient rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                    <item.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-secondary-900 mb-2">
+                  <h3 className="text-lg sm:text-xl font-bold text-secondary-900 mb-1 sm:mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-secondary-600">{item.description}</p>
+                  <p className="text-sm sm:text-base text-secondary-600">{item.description}</p>
                 </div>
                 {index < howItWorks.length - 1 && (
                   <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-1 bg-gradient-to-r from-primary-400 to-primary-200 rounded z-0" />
@@ -445,36 +482,36 @@ function App() {
       <section
         id="testimonials-section"
         data-animate
-        className={`py-20 bg-white relative transition-all duration-700 ${
+        className={`py-12 sm:py-16 lg:py-20 bg-white relative transition-all duration-700 ${
           visibleElements.has('testimonials-section') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <span className="inline-flex items-center gap-2 text-primary-600 font-medium text-sm uppercase tracking-wider">
-              <Star className="w-4 h-4 fill-accent-400 text-accent-400" />
+        <div className="max-w-6xl mx-auto px-3 sm:px-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <span className="inline-flex items-center gap-2 text-primary-600 font-medium text-xs sm:text-sm uppercase tracking-wider">
+              <Star className="w-3 h-3 sm:w-4 sm:h-4 fill-accent-400 text-accent-400" />
               Ils nous font confiance
             </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-secondary-900 mt-3 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary-900 mt-2 sm:mt-3 mb-3 sm:mb-4">
               Ce que disent les micro-importateurs
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 stagger-children">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 stagger-children">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="bg-gradient-to-br from-secondary-50 to-primary-50/30 rounded-2xl p-6 card-hover border border-primary-100">
-                <div className="flex gap-1 mb-4">
+              <div key={index} className="bg-gradient-to-br from-secondary-50 to-primary-50/30 rounded-xl sm:rounded-2xl p-4 sm:p-6 card-hover border border-primary-100">
+                <div className="flex gap-0.5 sm:gap-1 mb-3 sm:mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-accent-400 text-accent-400" />
+                    <Star key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-accent-400 text-accent-400" />
                   ))}
                 </div>
-                <p className="text-secondary-700 mb-4 italic text-lg">"{testimonial.text}"</p>
-                <div className="flex items-center justify-between pt-4 border-t border-primary-100">
+                <p className="text-secondary-700 mb-3 sm:mb-4 italic text-sm sm:text-lg">"{testimonial.text}"</p>
+                <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-primary-100">
                   <div>
-                    <p className="font-bold text-secondary-900">{testimonial.name}</p>
-                    <p className="text-sm text-secondary-500">{testimonial.location}</p>
+                    <p className="font-bold text-secondary-900 text-sm sm:text-base">{testimonial.name}</p>
+                    <p className="text-xs sm:text-sm text-secondary-500">{testimonial.location}</p>
                   </div>
-                  <span className="text-xs bg-primary-100 text-primary-700 px-3 py-1.5 rounded-full font-semibold">
+                  <span className="text-[10px] sm:text-xs bg-primary-100 text-primary-700 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full font-semibold">
                     {testimonial.trips}
                   </span>
                 </div>
@@ -488,42 +525,42 @@ function App() {
       <section
         id="regulation-section"
         data-animate
-        className={`py-20 gradient-bg transition-all duration-700 ${
+        className={`py-12 sm:py-16 lg:py-20 gradient-bg transition-all duration-700 ${
           visibleElements.has('regulation-section') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="bg-white rounded-3xl p-8 shadow-elite border border-primary-100">
-            <div className="flex items-center gap-4 mb-8">
-              <div className="w-14 h-14 icon-gradient rounded-xl flex items-center justify-center shadow-lg">
-                <Shield className="w-7 h-7 text-white" />
+        <div className="max-w-6xl mx-auto px-3 sm:px-4">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 shadow-elite border border-primary-100">
+            <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 icon-gradient rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
+                <Shield className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-secondary-900">Reglementation 080101</h3>
-                <p className="text-secondary-500">Decret executif n 25-170</p>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-secondary-900">Reglementation 080101</h3>
+                <p className="text-xs sm:text-sm text-secondary-500">Decret executif n 25-170</p>
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl border border-primary-200 card-hover group">
-                <p className="text-2xl font-black text-gradient">1.800.000 DA</p>
-                <p className="text-secondary-600 text-sm mt-1">Maximum par voyage</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4">
+              <div className="p-3 sm:p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-lg sm:rounded-xl border border-primary-200 card-hover group">
+                <p className="text-base sm:text-xl md:text-2xl font-black text-gradient">1.8M DA</p>
+                <p className="text-secondary-600 text-[10px] sm:text-sm mt-0.5 sm:mt-1">Max par voyage</p>
               </div>
-              <div className="p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl border border-primary-200 card-hover group">
-                <p className="text-2xl font-black text-gradient">2 voyages</p>
-                <p className="text-secondary-600 text-sm mt-1">Maximum par mois</p>
+              <div className="p-3 sm:p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-lg sm:rounded-xl border border-primary-200 card-hover group">
+                <p className="text-base sm:text-xl md:text-2xl font-black text-gradient">2 voyages</p>
+                <p className="text-secondary-600 text-[10px] sm:text-sm mt-0.5 sm:mt-1">Max par mois</p>
               </div>
-              <div className="p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl border border-primary-200 card-hover group">
-                <p className="text-2xl font-black text-gradient">5%</p>
-                <p className="text-secondary-600 text-sm mt-1">Droits de douane</p>
+              <div className="p-3 sm:p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-lg sm:rounded-xl border border-primary-200 card-hover group">
+                <p className="text-base sm:text-xl md:text-2xl font-black text-gradient">5%</p>
+                <p className="text-secondary-600 text-[10px] sm:text-sm mt-0.5 sm:mt-1">Droits douane</p>
               </div>
-              <div className="p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-xl border border-primary-200 card-hover group">
-                <p className="text-2xl font-black text-gradient">0,5%</p>
-                <p className="text-secondary-600 text-sm mt-1">Forfait fiscal IFU</p>
+              <div className="p-3 sm:p-5 bg-gradient-to-br from-primary-50 to-primary-100 rounded-lg sm:rounded-xl border border-primary-200 card-hover group">
+                <p className="text-base sm:text-xl md:text-2xl font-black text-gradient">0,5%</p>
+                <p className="text-secondary-600 text-[10px] sm:text-sm mt-0.5 sm:mt-1">Forfait IFU</p>
               </div>
             </div>
 
-            <p className="mt-8 text-secondary-500 text-sm text-center">
+            <p className="mt-4 sm:mt-8 text-secondary-500 text-xs sm:text-sm text-center">
               Micro-Import Elite est concu pour vous aider a respecter ces regles automatiquement.
             </p>
           </div>
@@ -534,19 +571,19 @@ function App() {
       <section
         id="faq-section"
         data-animate
-        className={`py-20 bg-white transition-all duration-700 ${
+        className={`py-12 sm:py-16 lg:py-20 bg-white transition-all duration-700 ${
           visibleElements.has('faq-section') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
         }`}
       >
-        <div className="max-w-3xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <span className="text-primary-600 font-medium text-sm uppercase tracking-wider">FAQ</span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-secondary-900 mt-3 mb-4">
+        <div className="max-w-3xl mx-auto px-3 sm:px-4">
+          <div className="text-center mb-8 sm:mb-12">
+            <span className="text-primary-600 font-medium text-xs sm:text-sm uppercase tracking-wider">FAQ</span>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-secondary-900 mt-2 sm:mt-3 mb-3 sm:mb-4">
               Questions frequentes
             </h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {faqs.map((faq, index) => (
               <div
                 key={index}
@@ -555,14 +592,14 @@ function App() {
                 }`}
               >
                 <button
-                  className="w-full px-6 py-5 text-left flex items-center justify-between bg-white hover:bg-primary-50/50 transition-colors"
+                  className="w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between bg-white hover:bg-primary-50/50 transition-colors gap-3"
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                 >
-                  <span className="font-bold text-secondary-900">{faq.question}</span>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${
+                  <span className="font-bold text-secondary-900 text-sm sm:text-base">{faq.question}</span>
+                  <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center transition-all flex-shrink-0 ${
                     openFaq === index ? 'bg-primary-600 rotate-180' : 'bg-primary-100'
                   }`}>
-                    <ChevronDown className={`w-5 h-5 transition-colors ${
+                    <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors ${
                       openFaq === index ? 'text-white' : 'text-primary-600'
                     }`} />
                   </div>
@@ -570,8 +607,8 @@ function App() {
                 <div className={`overflow-hidden transition-all duration-300 ${
                   openFaq === index ? 'max-h-96' : 'max-h-0'
                 }`}>
-                  <div className="px-6 py-5 bg-primary-50/50 border-t border-primary-100">
-                    <p className="text-secondary-600">{faq.answer}</p>
+                  <div className="px-4 sm:px-6 py-4 sm:py-5 bg-primary-50/50 border-t border-primary-100">
+                    <p className="text-secondary-600 text-sm sm:text-base">{faq.answer}</p>
                   </div>
                 </div>
               </div>
@@ -581,84 +618,84 @@ function App() {
       </section>
 
       {/* Section CTA Final */}
-      <section className="py-20 elite-dark-gradient text-white relative overflow-hidden">
-        {/* Animated background elements */}
+      <section className="py-12 sm:py-16 lg:py-20 elite-dark-gradient text-white relative overflow-hidden">
+        {/* Animated background elements - hidden on mobile */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary-500/20 rounded-full blur-3xl floating" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent-500/10 rounded-full blur-3xl floating-delayed" />
+          <div className="hidden sm:block absolute top-1/4 left-1/4 w-48 sm:w-64 h-48 sm:h-64 bg-primary-500/20 rounded-full blur-3xl floating" />
+          <div className="hidden sm:block absolute bottom-1/4 right-1/4 w-64 sm:w-80 h-64 sm:h-80 bg-accent-500/10 rounded-full blur-3xl floating-delayed" />
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur rounded-full text-sm font-medium mb-6 border border-white/20">
-            <Crown className="w-4 h-4 text-accent-400" />
+        <div className="max-w-4xl mx-auto px-3 sm:px-4 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/10 backdrop-blur rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6 border border-white/20">
+            <Crown className="w-3 h-3 sm:w-4 sm:h-4 text-accent-400" />
             <span>Offre de lancement limitee</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-bold mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 px-2">
             Pret a simplifier votre <span className="text-gradient-gold">micro-importation</span> ?
           </h2>
-          <p className="text-xl text-primary-200 mb-10">
+          <p className="text-base sm:text-lg lg:text-xl text-primary-200 mb-6 sm:mb-10 px-2">
             Rejoignez les centaines d'entrepreneurs qui ont deja reserve leur place.
           </p>
 
           <a
             href="#waitlist"
-            className="inline-flex items-center gap-3 btn-gold text-secondary-900 px-10 py-5 rounded-xl text-lg font-bold hover:shadow-gold transition-all shadow-lg group"
+            className="inline-flex items-center gap-2 sm:gap-3 btn-gold text-secondary-900 px-6 sm:px-10 py-4 sm:py-5 rounded-xl text-base sm:text-lg font-bold hover:shadow-gold transition-all shadow-lg group"
           >
             Rejoindre la liste d'attente
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform" />
           </a>
 
-          <p className="mt-8 text-primary-300 text-sm flex items-center justify-center gap-2">
-            <CheckCircle2 className="w-4 h-4" />
+          <p className="mt-6 sm:mt-8 text-primary-300 text-xs sm:text-sm flex items-center justify-center gap-2">
+            <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" />
             Inscription gratuite - Pas de carte bancaire requise
           </p>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="bg-secondary-950 text-white py-12">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-11 h-11 icon-gradient rounded-xl flex items-center justify-center">
-                  <Crown className="w-6 h-6 text-white" />
+      <footer className="bg-secondary-950 text-white py-8 sm:py-12">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
+            <div className="text-center sm:text-left">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 justify-center sm:justify-start">
+                <div className="w-9 h-9 sm:w-11 sm:h-11 icon-gradient rounded-xl flex items-center justify-center">
+                  <Crown className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold text-lg leading-tight">Micro-Import</span>
-                  <span className="text-xs font-semibold text-primary-400 uppercase tracking-wider">Elite</span>
+                  <span className="font-bold text-base sm:text-lg leading-tight">Micro-Import</span>
+                  <span className="text-[10px] sm:text-xs font-semibold text-primary-400 uppercase tracking-wider">Elite</span>
                 </div>
               </div>
-              <p className="text-secondary-400 text-sm">
+              <p className="text-secondary-400 text-xs sm:text-sm">
                 L'outil de gestion concu specifiquement pour les micro-importateurs algeriens sous le regime 080101.
               </p>
             </div>
 
-            <div>
-              <h4 className="font-bold mb-4">Ressources</h4>
-              <ul className="space-y-2 text-secondary-400 text-sm">
+            <div className="text-center sm:text-left">
+              <h4 className="font-bold mb-3 sm:mb-4 text-sm sm:text-base">Ressources</h4>
+              <ul className="space-y-2 text-secondary-400 text-xs sm:text-sm">
                 <li><a href="#" className="hover:text-primary-400 transition-colors">Guide du regime 080101</a></li>
                 <li><a href="#" className="hover:text-primary-400 transition-colors">Calculateur de taxes</a></li>
                 <li><a href="#" className="hover:text-primary-400 transition-colors">Blog</a></li>
               </ul>
             </div>
 
-            <div>
-              <h4 className="font-bold mb-4">Contact</h4>
-              <ul className="space-y-2 text-secondary-400 text-sm">
+            <div className="text-center sm:text-left">
+              <h4 className="font-bold mb-3 sm:mb-4 text-sm sm:text-base">Contact</h4>
+              <ul className="space-y-2 text-secondary-400 text-xs sm:text-sm">
                 <li>contact@microimport-elite.dz</li>
                 <li>Alger, Algerie</li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-secondary-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-secondary-400 text-sm">
+          <div className="border-t border-secondary-800 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
+            <p className="text-secondary-400 text-xs sm:text-sm text-center md:text-left">
               {new Date().getFullYear()} Micro-Import Elite. Tous droits reserves.
             </p>
-            <div className="flex items-center gap-2 text-sm text-secondary-400">
-              <Sparkles className="w-4 h-4 text-accent-400" />
+            <div className="flex items-center gap-2 text-xs sm:text-sm text-secondary-400">
+              <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-accent-400" />
               Fait avec passion pour les entrepreneurs algeriens
             </div>
           </div>
