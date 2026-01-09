@@ -8,6 +8,12 @@ export default {
   theme: {
     extend: {
       colors: {
+        // CSS variable mappings for shadcn/ui
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         // Couleurs principales Micro-Import Elite
         primary: {
           50: '#f0fdf4',
