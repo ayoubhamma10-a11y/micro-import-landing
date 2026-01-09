@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Shield,
   Calculator,
@@ -12,7 +12,6 @@ import {
   Receipt,
   Star,
   ChevronDown,
-  ChevronUp,
   ArrowRight,
   Sparkles,
   Crown,
