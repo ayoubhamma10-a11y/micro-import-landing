@@ -37,7 +37,11 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
   } = useForm<WaitlistFormData>({
     resolver: zodResolver(waitlistSchema),
     defaultValues: {
+      email: '',
+      profil: undefined,
       marches: [],
+      budget: undefined,
+      investissement: undefined,
     },
   })
 
@@ -139,20 +143,20 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
             className="space-y-3"
           >
             {Object.entries(profilLabels).map(([value, label]) => (
-              <div
+              <Label
                 key={value}
+                htmlFor={value}
                 className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-all cursor-pointer ${
                   selectedProfil === value
                     ? 'border-primary-500 bg-primary-50'
                     : 'border-secondary-200 hover:border-primary-300'
                 }`}
-                onClick={() => setValue('profil', value as WaitlistFormData['profil'], { shouldValidate: true })}
               >
                 <RadioGroupItem value={value} id={value} />
-                <Label htmlFor={value} className="cursor-pointer flex-1">
+                <span className="flex-1">
                   {label}
-                </Label>
-              </div>
+                </span>
+              </Label>
             ))}
           </RadioGroup>
           {errors.profil && (
@@ -217,20 +221,20 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
             className="grid gap-3 sm:grid-cols-2"
           >
             {Object.entries(budgetLabels).map(([value, label]) => (
-              <div
+              <Label
                 key={value}
+                htmlFor={`budget-${value}`}
                 className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-all cursor-pointer ${
                   selectedBudget === value
                     ? 'border-primary-500 bg-primary-50'
                     : 'border-secondary-200 hover:border-primary-300'
                 }`}
-                onClick={() => setValue('budget', value as WaitlistFormData['budget'], { shouldValidate: true })}
               >
                 <RadioGroupItem value={value} id={`budget-${value}`} />
-                <Label htmlFor={`budget-${value}`} className="cursor-pointer">
+                <span>
                   {label}
-                </Label>
-              </div>
+                </span>
+              </Label>
             ))}
           </RadioGroup>
           {errors.budget && (
@@ -259,20 +263,20 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
             className="grid gap-3 sm:grid-cols-2"
           >
             {Object.entries(investissementLabels).map(([value, label]) => (
-              <div
+              <Label
                 key={value}
+                htmlFor={`invest-${value}`}
                 className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-all cursor-pointer ${
                   selectedInvestissement === value
                     ? 'border-primary-500 bg-primary-50'
                     : 'border-secondary-200 hover:border-primary-300'
                 }`}
-                onClick={() => setValue('investissement', value as WaitlistFormData['investissement'], { shouldValidate: true })}
               >
                 <RadioGroupItem value={value} id={`invest-${value}`} />
-                <Label htmlFor={`invest-${value}`} className="cursor-pointer">
+                <span>
                   {label}
-                </Label>
-              </div>
+                </span>
+              </Label>
             ))}
           </RadioGroup>
           {errors.investissement && (
