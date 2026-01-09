@@ -13,12 +13,12 @@ import {
   Star,
   ChevronDown,
   ChevronUp,
-  Zap,
   ArrowRight,
 } from 'lucide-react'
 
 import { WaitlistForm } from '@/components/WaitlistForm'
 import { SuccessScreen } from '@/components/SuccessScreen'
+import { SpotsCounter } from '@/components/SpotsCounter'
 
 function App() {
   const [isSuccess, setIsSuccess] = useState(false)
@@ -170,11 +170,8 @@ function App() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              {/* Badge urgence */}
-              <div className="inline-flex items-center gap-2 bg-accent-100 text-accent-700 px-4 py-2 rounded-full text-sm font-medium mb-6 animate-pulse">
-                <Zap className="w-4 h-4" />
-                Places limitées - 127 inscrits cette semaine
-              </div>
+              {/* Badge urgence dynamique */}
+              <SpotsCounter className="mb-6" />
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-secondary-900 mb-6 leading-tight">
                 Fini les calculs sur papier.{' '}
@@ -244,6 +241,9 @@ function App() {
 
                 <WaitlistForm onSuccess={() => setIsSuccess(true)} />
               </div>
+
+              {/* Compteur de places */}
+              <SpotsCounter variant="card" className="mt-6" />
             </div>
           </div>
         </div>
