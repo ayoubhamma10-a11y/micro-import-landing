@@ -102,15 +102,15 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
       {/* Question 1 - Email */}
       <Card className="border-0 shadow-md hover:shadow-lg transition-shadow bg-gradient-to-br from-white to-primary-50/30">
-        <CardContent className="pt-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2.5 icon-gradient rounded-xl">
-              <Mail className="w-5 h-5 text-white" />
+        <CardContent className="p-4 sm:pt-6 sm:px-6">
+          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="p-2 sm:p-2.5 icon-gradient rounded-lg sm:rounded-xl flex-shrink-0">
+              <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <Label className="text-lg font-bold text-secondary-800">
+            <Label className="text-base sm:text-lg font-bold text-secondary-800">
               Votre adresse email
             </Label>
           </div>
@@ -118,74 +118,74 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
             type="email"
             placeholder="votre@email.com"
             {...register('email')}
-            className="text-base border-2 focus:border-primary-400 focus:ring-primary-400/20 transition-all"
+            className="text-sm sm:text-base border-2 focus:border-primary-400 focus:ring-primary-400/20 transition-all"
           />
           {errors.email && (
-            <p className="mt-2 text-sm text-red-500 font-medium">{errors.email.message}</p>
+            <p className="mt-2 text-xs sm:text-sm text-red-500 font-medium">{errors.email.message}</p>
           )}
         </CardContent>
       </Card>
 
       {/* Question 2 - Profil */}
       <Card className="border-0 shadow-md hover:shadow-lg transition-shadow bg-gradient-to-br from-white to-primary-50/30">
-        <CardContent className="pt-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2.5 icon-gradient rounded-xl">
-              <User className="w-5 h-5 text-white" />
+        <CardContent className="p-4 sm:pt-6 sm:px-6">
+          <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="p-2 sm:p-2.5 icon-gradient rounded-lg sm:rounded-xl flex-shrink-0 mt-0.5 sm:mt-0">
+              <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <Label className="text-lg font-bold text-secondary-800">
+            <Label className="text-sm sm:text-lg font-bold text-secondary-800 leading-tight">
               Ou en etes-vous dans la micro-importation ?
             </Label>
           </div>
           <RadioGroup
             value={selectedProfil ?? ""}
             onValueChange={(value) => setValue('profil', value as WaitlistFormData['profil'], { shouldValidate: true })}
-            className="space-y-3"
+            className="space-y-2 sm:space-y-3"
           >
             {Object.entries(profilLabels).map(([value, label]) => (
               <Label
                 key={value}
                 htmlFor={value}
-                className={`flex items-center space-x-3 p-4 rounded-xl border-2 transition-all cursor-pointer group ${
+                className={`flex items-center gap-2 sm:space-x-3 p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all cursor-pointer group ${
                   selectedProfil === value
                     ? 'border-primary-500 bg-primary-50 shadow-md'
                     : 'border-secondary-200 hover:border-primary-300 hover:bg-primary-50/30'
                 }`}
               >
-                <RadioGroupItem value={value} id={value} className="border-primary-400 text-primary-600" />
-                <span className={`flex-1 font-medium ${selectedProfil === value ? 'text-primary-700' : 'text-secondary-700'}`}>
+                <RadioGroupItem value={value} id={value} className="border-primary-400 text-primary-600 flex-shrink-0" />
+                <span className={`flex-1 font-medium text-sm sm:text-base ${selectedProfil === value ? 'text-primary-700' : 'text-secondary-700'}`}>
                   {label}
                 </span>
               </Label>
             ))}
           </RadioGroup>
           {errors.profil && (
-            <p className="mt-2 text-sm text-red-500 font-medium">{errors.profil.message}</p>
+            <p className="mt-2 text-xs sm:text-sm text-red-500 font-medium">{errors.profil.message}</p>
           )}
         </CardContent>
       </Card>
 
       {/* Question 3 - Marches */}
       <Card className="border-0 shadow-md hover:shadow-lg transition-shadow bg-gradient-to-br from-white to-primary-50/30">
-        <CardContent className="pt-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2.5 icon-gradient rounded-xl">
-              <Globe className="w-5 h-5 text-white" />
+        <CardContent className="p-4 sm:pt-6 sm:px-6">
+          <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="p-2 sm:p-2.5 icon-gradient rounded-lg sm:rounded-xl flex-shrink-0 mt-0.5 sm:mt-0">
+              <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <Label className="text-lg font-bold text-secondary-800">
+            <Label className="text-sm sm:text-lg font-bold text-secondary-800 leading-tight">
               Ou vous approvisionnez-vous ?
             </Label>
           </div>
-          <p className="text-sm text-secondary-500 mb-4 flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-accent-500" />
+          <p className="text-xs sm:text-sm text-secondary-500 mb-3 sm:mb-4 flex items-center gap-1.5 sm:gap-2">
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-accent-500" />
             Plusieurs choix possibles
           </p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
             {marchesOptions.map((option) => (
               <Label
                 key={option.value}
                 htmlFor={`marche-${option.value}`}
-                className={`flex items-center space-x-3 p-4 rounded-xl border-2 transition-all cursor-pointer ${
+                className={`flex items-center gap-2 p-2.5 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all cursor-pointer ${
                   selectedMarches.includes(option.value)
                     ? 'border-primary-500 bg-primary-50 shadow-md'
                     : 'border-secondary-200 hover:border-primary-300 hover:bg-primary-50/30'
@@ -195,105 +195,105 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
                   id={`marche-${option.value}`}
                   checked={selectedMarches.includes(option.value)}
                   onCheckedChange={() => toggleMarche(option.value)}
-                  className="border-primary-400 data-[state=checked]:bg-primary-600 data-[state=checked]:border-primary-600"
+                  className="border-primary-400 data-[state=checked]:bg-primary-600 data-[state=checked]:border-primary-600 flex-shrink-0"
                 />
-                <span className={`font-medium text-sm ${selectedMarches.includes(option.value) ? 'text-primary-700' : 'text-secondary-700'}`}>
+                <span className={`font-medium text-xs sm:text-sm ${selectedMarches.includes(option.value) ? 'text-primary-700' : 'text-secondary-700'}`}>
                   {option.label}
                 </span>
               </Label>
             ))}
           </div>
           {errors.marches && (
-            <p className="mt-2 text-sm text-red-500 font-medium">{errors.marches.message}</p>
+            <p className="mt-2 text-xs sm:text-sm text-red-500 font-medium">{errors.marches.message}</p>
           )}
         </CardContent>
       </Card>
 
       {/* Question 4 - Budget */}
       <Card className="border-0 shadow-md hover:shadow-lg transition-shadow bg-gradient-to-br from-white to-primary-50/30">
-        <CardContent className="pt-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2.5 icon-gradient rounded-xl">
-              <Wallet className="w-5 h-5 text-white" />
+        <CardContent className="p-4 sm:pt-6 sm:px-6">
+          <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="p-2 sm:p-2.5 icon-gradient rounded-lg sm:rounded-xl flex-shrink-0 mt-0.5 sm:mt-0">
+              <Wallet className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <Label className="text-lg font-bold text-secondary-800">
+            <Label className="text-sm sm:text-lg font-bold text-secondary-800 leading-tight">
               Quel est votre budget par voyage ?
             </Label>
           </div>
           <RadioGroup
             value={selectedBudget ?? ""}
             onValueChange={(value) => setValue('budget', value as WaitlistFormData['budget'], { shouldValidate: true })}
-            className="grid gap-3 sm:grid-cols-2"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3"
           >
             {Object.entries(budgetLabels).map(([value, label]) => (
               <Label
                 key={value}
                 htmlFor={`budget-${value}`}
-                className={`flex items-center space-x-3 p-4 rounded-xl border-2 transition-all cursor-pointer ${
+                className={`flex items-center gap-2 sm:space-x-3 p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all cursor-pointer ${
                   selectedBudget === value
                     ? 'border-primary-500 bg-primary-50 shadow-md'
                     : 'border-secondary-200 hover:border-primary-300 hover:bg-primary-50/30'
                 }`}
               >
-                <RadioGroupItem value={value} id={`budget-${value}`} className="border-primary-400 text-primary-600" />
-                <span className={`font-medium ${selectedBudget === value ? 'text-primary-700' : 'text-secondary-700'}`}>
+                <RadioGroupItem value={value} id={`budget-${value}`} className="border-primary-400 text-primary-600 flex-shrink-0" />
+                <span className={`font-medium text-sm sm:text-base ${selectedBudget === value ? 'text-primary-700' : 'text-secondary-700'}`}>
                   {label}
                 </span>
               </Label>
             ))}
           </RadioGroup>
           {errors.budget && (
-            <p className="mt-2 text-sm text-red-500 font-medium">{errors.budget.message}</p>
+            <p className="mt-2 text-xs sm:text-sm text-red-500 font-medium">{errors.budget.message}</p>
           )}
         </CardContent>
       </Card>
 
       {/* Question 5 - Investissement */}
       <Card className="border-0 shadow-md hover:shadow-lg transition-shadow bg-gradient-to-br from-white to-primary-50/30">
-        <CardContent className="pt-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2.5 icon-gradient rounded-xl">
-              <CreditCard className="w-5 h-5 text-white" />
+        <CardContent className="p-4 sm:pt-6 sm:px-6">
+          <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <div className="p-2 sm:p-2.5 icon-gradient rounded-lg sm:rounded-xl flex-shrink-0 mt-0.5 sm:mt-0">
+              <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <Label className="text-lg font-bold text-secondary-800">
+            <Label className="text-sm sm:text-lg font-bold text-secondary-800 leading-tight">
               Combien seriez-vous pret a investir pour cet outil ?
             </Label>
           </div>
-          <p className="text-sm text-secondary-500 mb-4">
+          <p className="text-xs sm:text-sm text-secondary-500 mb-3 sm:mb-4">
             Un outil qui gere vos calculs fiscaux et votre conformite
           </p>
           <RadioGroup
             value={selectedInvestissement ?? ""}
             onValueChange={(value) => setValue('investissement', value as WaitlistFormData['investissement'], { shouldValidate: true })}
-            className="grid gap-3 sm:grid-cols-2"
+            className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3"
           >
             {Object.entries(investissementLabels).map(([value, label]) => (
               <Label
                 key={value}
                 htmlFor={`invest-${value}`}
-                className={`flex items-center space-x-3 p-4 rounded-xl border-2 transition-all cursor-pointer ${
+                className={`flex items-center gap-2 sm:space-x-3 p-3 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all cursor-pointer ${
                   selectedInvestissement === value
                     ? 'border-primary-500 bg-primary-50 shadow-md'
                     : 'border-secondary-200 hover:border-primary-300 hover:bg-primary-50/30'
                 }`}
               >
-                <RadioGroupItem value={value} id={`invest-${value}`} className="border-primary-400 text-primary-600" />
-                <span className={`font-medium ${selectedInvestissement === value ? 'text-primary-700' : 'text-secondary-700'}`}>
+                <RadioGroupItem value={value} id={`invest-${value}`} className="border-primary-400 text-primary-600 flex-shrink-0" />
+                <span className={`font-medium text-sm sm:text-base ${selectedInvestissement === value ? 'text-primary-700' : 'text-secondary-700'}`}>
                   {label}
                 </span>
               </Label>
             ))}
           </RadioGroup>
           {errors.investissement && (
-            <p className="mt-2 text-sm text-red-500 font-medium">{errors.investissement.message}</p>
+            <p className="mt-2 text-xs sm:text-sm text-red-500 font-medium">{errors.investissement.message}</p>
           )}
         </CardContent>
       </Card>
 
       {/* Erreur globale */}
       {error && (
-        <div className="p-4 bg-red-50 border-2 border-red-200 rounded-xl">
-          <p className="text-sm text-red-600 font-medium">{error}</p>
+        <div className="p-3 sm:p-4 bg-red-50 border-2 border-red-200 rounded-lg sm:rounded-xl">
+          <p className="text-xs sm:text-sm text-red-600 font-medium">{error}</p>
         </div>
       )}
 
@@ -302,22 +302,22 @@ export function WaitlistForm({ onSuccess }: WaitlistFormProps) {
         type="submit"
         size="lg"
         disabled={isSubmitting}
-        className="w-full text-lg py-6 btn-elite text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all"
+        className="w-full text-sm sm:text-lg py-4 sm:py-6 btn-elite text-white font-bold rounded-lg sm:rounded-xl shadow-lg hover:shadow-xl transition-all"
       >
         {isSubmitting ? (
           <>
-            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+            <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
             Inscription en cours...
           </>
         ) : (
           <>
-            <Sparkles className="mr-2 h-5 w-5" />
+            <Sparkles className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Rejoindre la liste d'attente
           </>
         )}
       </Button>
 
-      <p className="text-center text-sm text-secondary-500">
+      <p className="text-center text-xs sm:text-sm text-secondary-500">
         Vos informations restent strictement confidentielles.
       </p>
     </form>
