@@ -21,8 +21,7 @@ export const waitlistSchema = z.object({
     '4000_6000',
     '6000_8000',
     '8000_10000',
-    '10000_12000',
-    'plus_12000'
+    '10000_12000'
   ], {
     required_error: "Veuillez sélectionner votre budget",
   }),
@@ -61,7 +60,6 @@ export const budgetLabels: Record<string, string> = {
   '6000_8000': "6 000 € à 8 000 €",
   '8000_10000': "8 000 € à 10 000 €",
   '10000_12000': "10 000 € à 12 000 €",
-  plus_12000: "Plus de 12 000 €",
 }
 
 export const investissementLabels: Record<string, string> = {
